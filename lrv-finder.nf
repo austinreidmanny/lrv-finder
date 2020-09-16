@@ -146,7 +146,10 @@ process combine_bams {
 }
 
 process bam_to_fasta {
-    // Take in mapped BAM, split it up by viral species & save as species-specific FASTA files
+   // If no reads are mapped, then no reads can be extracted; that's fine, have it ignore it
+   errorStrategy 'ignore' 
+
+   // Take in mapped BAM, split it up by viral species & save as species-specific FASTA files
     publishDir "${params.output}/04_binned_reads/", mode: "copy"
 
     input:
